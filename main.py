@@ -3,9 +3,7 @@ import conf
 import random
 import json
 
-
 fake = Faker(locale="ru_RU")
-
 
 def title():
     with open("book.txt","r",encoding='utf-8') as f:
@@ -24,9 +22,10 @@ def price():
     return random.random()
 def author():
     L = []
-    for i in range(1,3):
+    for i in range(3):
         name = fake.name()
         L.append(name)
+    return L
 
 
 
