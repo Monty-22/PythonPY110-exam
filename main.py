@@ -1,40 +1,50 @@
-from faker import Faker
 import conf
 import random
 import json
+from typing import Union,List
+from faker import Faker
 
 fake = Faker(locale="ru_RU")
 
-def title():
+def title() ->str:
+    """Функция возвращает случайным образом выбранное название книги """
     with open("book.txt","r",encoding='utf-8') as f:
-            Book_lines = ""
-            Book_line = f.read()
-    S = Book_line.split("\n")
-    Title = random.choice(S)
-    return Title
-def year():
+            book_lines: str = ""
+            book_line = f.read()
+    s: List[str] = book_line.split("\n")
+    title_: str = random.choice(s)
+    return title_
+
+
+def year() -> int:
     return random.randint(1,2020)
-def pages():
+
+
+def pages() -> int:
     return random.randint(50,2000)
-def rating():
+
+
+def rating() -> int:
     return random.randint(1,5)
-def price():
+
+
+def price() -> Union[int, float]:
     return random.random()
-def author():
-    L = []
-    for i in range(3):
+
+
+def author() -> list:
+    list_1: list = []
+    for _ in range(3):
         name = fake.name()
-        L.append(name)
-    return L
+        list_.append(name)
+    return list_1
 
 
-
-
-def dict_generator(pk_d = 1, n = 1):
-
+def dict_generator(pk_d: int = 1, n: int = 1):
+    """Возвращает генератор словарей с атрибутами книг"""
     pk = pk_d
-    for i in range(n):
-            Dict = {
+    for _ in range(n):
+            dict_1: dict = {
                 "model" : conf.model,
                 "pk" : pk,
                 "fields" : {
@@ -49,29 +59,24 @@ def dict_generator(pk_d = 1, n = 1):
                 }
             }
             pk += 1
-
-            yield Dict
-
-
+            yield dict_1
 
 
 if __name__ == '__main__':
 
-    g = dict_generator(n=250)
+    g = dict_generator(n = 250)
 
-    L = []
-    for i in range(1,250):
-          D = next(g)
-          L.append(D)
+    list_ = []
+    for _ in range(1,250):
+          dict_ = next(g)
+          list_.append(dict_)
 
     with open("dict_file.json", "w") as file:
-        json.dump(L,file)
+        json.dump(list_,file)
 
     with open("dict_file.json", "r") as file:
         LL = json.load(file)
-        print(type(LL))
-    for line in LL:
-        print(line)
+
 
 
 
